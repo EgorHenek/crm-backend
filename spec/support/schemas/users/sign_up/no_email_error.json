@@ -1,0 +1,40 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "status",
+    "errors"
+  ],
+  "properties": {
+    "status": {
+      "$id": "#/properties/status",
+      "type": "boolean",
+      "title": "The Status Schema",
+      "default": false,
+      "examples": [
+        false
+      ]
+    },
+    "errors": {
+      "$id": "#/properties/errors",
+      "type": "array",
+      "title": "The Errors Schema",
+      "items": {
+        "$id": "#/properties/errors/items",
+        "type": "string",
+        "enum": [
+          "Email не может быть пустым"
+        ],
+        "title": "The Items Schema",
+        "default": "",
+        "examples": [
+          "Email не может быть пустым"
+        ],
+        "pattern": "^(.*)$"
+      }
+    }
+  }
+}

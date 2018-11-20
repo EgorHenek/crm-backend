@@ -1,0 +1,47 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "success",
+    "code",
+    "url"
+  ],
+  "properties": {
+    "success": {
+      "$id": "#/properties/success",
+      "type": "boolean",
+      "enum": [
+        true
+      ],
+      "title": "The Success Schema",
+      "default": false,
+      "examples": [
+        true
+      ]
+    },
+    "code": {
+      "$id": "#/properties/code",
+      "type": "string",
+      "title": "The Code Schema",
+      "default": "",
+      "examples": [
+        "otp_secret"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "url": {
+      "$id": "#/properties/url",
+      "type": "string",
+      "title": "The Url Schema",
+      "default": "",
+      "examples": [
+        "otpauth://totp/CEM:user@example.com?secret=[otp_secret]&issuer=CRM"
+      ],
+      "pattern": "^(.*)$",
+      "format": "uri"
+    }
+  }
+}

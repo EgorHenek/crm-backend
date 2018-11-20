@@ -1,0 +1,35 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "success",
+    "token"
+  ],
+  "properties": {
+    "success": {
+      "$id": "#/properties/success",
+      "type": "boolean",
+      "enum": [
+        true
+      ],
+      "title": "The Success Schema",
+      "default": false,
+      "examples": [
+        true
+      ]
+    },
+    "token": {
+      "$id": "#/properties/token",
+      "type": "string",
+      "title": "The Token Schema",
+      "default": "",
+      "examples": [
+        "12345"
+      ],
+      "pattern": "^(.*)$"
+    }
+  }
+}
