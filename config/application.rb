@@ -33,7 +33,7 @@ module Backend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-    config.i18n.available_locales = :ru
+    config.i18n.available_locales = [:ru, :en]
     config.i18n.default_locale = :ru
     config.action_mailer.default_url_options = { host: 'crm.ihenek.ru' }
     config.filter_parameters += [:otp_attempt]

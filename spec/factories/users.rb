@@ -6,8 +6,13 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     password { Faker::Internet.password(6, 128) }
 
-    after :create do |user, role|
-      user.add_role(role) if role.present?
+    transient do
+      role { 'helper' }
+    end
+
+    after :create do |user, options|
+      user.add_role(options.role) if options.role.present?
+      user.remove_role(:client) if options.role.present?
       user.confirm
     end
 
