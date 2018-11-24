@@ -5,11 +5,14 @@ class Ability
 
   def initialize(user)
     # Define abilities for the passed in user here. For example:
-    can :read, :all
     if user.present?
       can :manage, :all if user.has_role? :admin
       can :create, :totp unless user.otp_required_for_login
-      can [:delete, :send_code], :totp if user.otp_required_for_login
+      can %i[delete send_code], :totp if user.otp_required_for_login
+
+      can :read, Task, users: { id: user.id }
+      can :create, Task unless user.has_role? :client
+      can %i[destroy update add_subcontactor delete_subcontactor], Task, creator: user
     end
     # The first argument to `can` is the action you are giving the user
     # permission to do.

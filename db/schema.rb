@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_16_172019) do
+ActiveRecord::Schema.define(version: 2018_11_22_134435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audits", force: :cascade do |t|
+    t.integer "auditable_id"
+    t.string "auditable_type"
+    t.integer "associated_id"
+    t.string "associated_type"
+    t.integer "user_id"
+    t.string "user_type"
+    t.string "username"
+    t.string "action"
+    t.text "audited_changes"
+    t.integer "version", default: 0
+    t.string "comment"
+    t.string "remote_address"
+    t.string "request_uuid"
+    t.datetime "created_at"
+    t.index ["associated_type", "associated_id"], name: "associated_index"
+    t.index ["auditable_type", "auditable_id", "version"], name: "auditable_index"
+    t.index ["created_at"], name: "index_audits_on_created_at"
+    t.index ["request_uuid"], name: "index_audits_on_request_uuid"
+    t.index ["user_id", "user_type"], name: "user_index"
+  end
 
   create_table "jwt_blacklists", force: :cascade do |t|
     t.string "jti", null: false
@@ -29,6 +51,40 @@ ActiveRecord::Schema.define(version: 2018_11_16_172019) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "task_histories", force: :cascade do |t|
+    t.bigint "author_id", null: false
+    t.string "has_change", null: false
+    t.string "change", null: false
+    t.datetime "created_at", null: false
+    t.bigint "task_id"
+    t.index ["author_id"], name: "index_task_histories_on_author_id"
+    t.index ["task_id"], name: "index_task_histories_on_task_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", null: false
+    t.datetime "start_time", null: false
+    t.boolean "started", default: false
+    t.datetime "end_time"
+    t.boolean "ended", default: false
+    t.string "color"
+    t.datetime "notify"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
+  end
+
+  create_table "tasks_users", force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "user_id"
+    t.string "role", null: false
+    t.index ["task_id"], name: "index_tasks_users_on_task_id"
+    t.index ["user_id", "task_id"], name: "index_tasks_users_on_user_id_and_task_id", unique: true
+    t.index ["user_id"], name: "index_tasks_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -81,4 +137,18 @@ ActiveRecord::Schema.define(version: 2018_11_16_172019) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.integer "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  end
+
+  add_foreign_key "task_histories", "tasks"
+  add_foreign_key "task_histories", "users", column: "author_id"
+  add_foreign_key "tasks_users", "tasks"
+  add_foreign_key "tasks_users", "users"
 end

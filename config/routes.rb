@@ -17,5 +17,11 @@ Rails.application.routes.draw do
              as: :user_registration,
              defaults: { format: :json }
   end
+  resources :tasks do
+    member do
+      post 'subcontactors', action: 'add_subcontactor'
+      delete 'subcontactors', action: 'delete_subcontactor'
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
