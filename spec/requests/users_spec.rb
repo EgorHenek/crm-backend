@@ -125,6 +125,10 @@ RSpec.describe 'Users', type: :request do
       post auth_totp_path, headers: auth_headers(@user_with_otp_code), params: { code: @user_with_otp_code.current_otp }
       expect(response).to have_http_status(:created)
     end
+    it 'Ошибка неверный код' do
+      post auth_totp_path, headers: auth_headers(@user_with_otp_code), params: { code: '32143' }
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
     it 'Ошибка при уже включённом totp' do
       post auth_totp_path, headers: auth_headers(@user_otp_auth)
       expect(response).to have_http_status(:forbidden)
