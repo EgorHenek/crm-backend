@@ -6,7 +6,7 @@ class TotpController < ApplicationController
       current_user.otp_required_for_login = true
       current_user.save
       render json: { success: true }, status: :created
-    elsif current_user.otp_secret.present? && code_params[:code] != current_user.current_otp
+    elsif current_user.otp_secret.present? && code_params[:code].present? && code_params[:code] != current_user.current_otp
       render json: { success: false }, status: :unprocessable_entity
     else
       current_user.otp_secret = User.generate_otp_secret
