@@ -8,7 +8,13 @@ class SessionsController < Devise::SessionsController
 
   def show
     if user_signed_in?
-      render json: { user: {id: current_user.id, first_name: current_user.first_name, second_name: current_user.second_name, last_name: current_user.last_name, email: current_user.email, roles: current_user.roles.map(&:name), otp_required_for_login: current_user.otp_required_for_login}}
+      render json: { user: { id: current_user.id,
+                             first_name: current_user.first_name,
+                             second_name: current_user.second_name,
+                             last_name: current_user.last_name,
+                             email: current_user.email,
+                             roles: current_user.roles.map(&:name),
+                             otp_required_for_login: otp_required_for_login } }
     end
   end
 
@@ -16,5 +22,9 @@ class SessionsController < Devise::SessionsController
 
   def current_token
     request.env['warden-jwt_auth.token']
+  end
+
+  def otp_required_for_login
+    current_user.otp_required_for_login.blank? ? false : true
   end
 end
