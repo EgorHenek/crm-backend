@@ -159,11 +159,11 @@ RSpec.describe 'Users', type: :request do
 
   describe 'POST /auth/send_code' do
     it 'return 200' do
-      post auth_send_code_path, headers: auth_headers(@user_otp_auth)
+      post auth_send_code_path, params: { email: @user_otp_auth.email }
       expect(response).to have_http_status(:created)
     end
     it 'Ошибка для отключённой авторизации по коду' do
-      post auth_send_code_path, headers: auth_headers(@user)
+      post auth_send_code_path, params: { email: @user.email }
       expect(response).to have_http_status(:forbidden)
     end
   end

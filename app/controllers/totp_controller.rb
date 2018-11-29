@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TotpController < ApplicationController
-  authorize_resource class: false
+  authorize_resource class: false, only: %i[create delete]
 
   def create
     if current_user.otp_secret.present? && code_params[:code] === current_user.current_otp
@@ -11,7 +13,7 @@ class TotpController < ApplicationController
     else
       current_user.otp_secret = User.generate_otp_secret
       current_user.save
-      render json: { success: true, code: current_user.otp_secret, url: current_user.otp_provisioning_uri("CRM:#{current_user.email}", issuer: "CRM") }
+      render json: { success: true, code: current_user.otp_secret, url: current_user.otp_provisioning_uri("CRM:#{current_user.email}", issuer: 'CRM') }
     end
   end
 
@@ -27,8 +29,13 @@ class TotpController < ApplicationController
   end
 
   def send_code
-    SendTwoFactorAuthenticationMailer.with(email: current_user.email, code: current_user.current_otp).send_token.deliver_now
-    render json: { success: true }, status: :created
+    user = User.find_by(email: params[:email])
+    if user.otp_required_for_login
+      SendTwoFactorAuthenticationMailer.with(email: user.email, code: user.current_otp).send_token.deliver_now
+      render json: { success: true }, status: :created
+    else
+      render status: :forbidden
+    end
   end
 
   protected

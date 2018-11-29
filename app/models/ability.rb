@@ -8,7 +8,7 @@ class Ability
     if user.present?
       can :manage, :all if user.has_role? :admin
       can :create, :totp unless user.otp_required_for_login
-      can %i[delete send_code], :totp if user.otp_required_for_login
+      can %i[delete], :totp if user.otp_required_for_login
 
       can :read, Task, users: { id: user.id }
       can :create, Task unless user.has_role? :client
