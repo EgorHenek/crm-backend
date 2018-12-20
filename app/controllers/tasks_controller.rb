@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all
 
-    render json: TaskSerializer.new(@tasks)
+    render json: TaskSerializer.new(@tasks).serialized_json
   end
 
   # GET /tasks/1
@@ -23,10 +23,10 @@ class TasksController < ApplicationController
 
     if @task.save
       @task.tasks_users << TasksUser.new(user: current_user, role: 'creator')
-      @task.tasks_users << TasksUser.new(user_id: params[:performer], role: 'performer')
+      @task.tasks_users << TasksUser.new(user_id: params[:performer], role: 'performer') if params[:performer].present?
       render json: TaskSerializer.new(@task).serialized_json, status: :created, location: @task
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: @task.errors.full_messages, status: :unprocessable_entity
     end
   end
 

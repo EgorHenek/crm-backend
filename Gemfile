@@ -33,6 +33,7 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'devise-jwt', '~> 0.5.8'
 gem 'devise-two-factor'
+gem 'friendly_id', '~> 5.2.4'
 gem 'rack-cors'
 gem 'rolify'
 

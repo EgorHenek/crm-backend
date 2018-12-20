@@ -15,13 +15,6 @@ class TaskSerializer
         roles: object.performer.roles.map(&:name)
     }
   end
-  attribute :performer do |object|
-    {
-        id: object.performer.id,
-        name: object.performer.full_name,
-        roles: object.performer.roles.map(&:name)
-    }
-  end
   attribute :subcontactors do |object|
     object.subcontactors.map do |subcontactor|
       {

@@ -22,7 +22,8 @@ class Task < ApplicationRecord
   end
 
   def performer
-    tasks_users.find_by(role: 'performer').user
+    performer = tasks_users.find_by(role: 'performer')
+    !performer.nil? ? performer.user : creator
   end
 
   def subcontactors

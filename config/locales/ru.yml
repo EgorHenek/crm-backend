@@ -1,0 +1,12 @@
+ru:
+  active_record:
+    models:
+      tasks:
+        one: Задача
+        few: Задач
+        other: Задачи
+        many: Задачи
+      attributes:
+        color: Цвет
+        title: Заголовок
+        description: Описание
