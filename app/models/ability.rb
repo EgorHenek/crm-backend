@@ -13,6 +13,10 @@ class Ability
       can :read, Task, users: { id: user.id }
       can :create, Task unless user.has_role? :client
       can %i[destroy update add_subcontactor delete_subcontactor], Task, creator: user
+      can :manage, News
+    end
+    can :read, News, ['published_at < ?', Time.now] do |news|
+      news.published_at && news.published_at < Time.now
     end
     # The first argument to `can` is the action you are giving the user
     # permission to do.

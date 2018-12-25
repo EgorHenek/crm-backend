@@ -6,6 +6,11 @@ ru:
         few: Задач
         other: Задачи
         many: Задачи
+      news:
+        one: новость
+        few: новости
+        many: новостей
+        other: новостей
       attributes:
         color: Цвет
         title: Заголовок

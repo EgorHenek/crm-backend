@@ -1,0 +1,92 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "$id": "#/properties/data",
+      "type": "array",
+      "title": "The Data Schema",
+      "items": {
+        "$id": "#/properties/data/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "id",
+          "type",
+          "attributes"
+        ],
+        "properties": {
+          "id": {
+            "$id": "#/properties/data/items/properties/id",
+            "type": "string",
+            "title": "The Id Schema",
+            "default": "",
+            "examples": [
+              "1"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "type": {
+            "$id": "#/properties/data/items/properties/type",
+            "type": "string",
+            "title": "The Type Schema",
+            "default": "",
+            "examples": [
+              "news"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "attributes": {
+            "$id": "#/properties/data/items/properties/attributes",
+            "type": "object",
+            "title": "The Attributes Schema",
+            "required": [
+              "title",
+              "description",
+              "published_at"
+            ],
+            "properties": {
+              "title": {
+                "$id": "#/properties/data/items/properties/attributes/properties/title",
+                "type": "string",
+                "title": "The Title Schema",
+                "default": "",
+                "examples": [
+                  "Thelma Griffin"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "description": {
+                "$id": "#/properties/data/items/properties/attributes/properties/description",
+                "type": "string",
+                "title": "The Description Schema",
+                "default": "",
+                "examples": [
+                  "I’ve got an idea–an idea so smart that my head would explode if I even began to know what I’m talking about."
+                ],
+                "pattern": "^(.*)$"
+              },
+              "published_at": {
+                "$id": "#/properties/data/items/properties/attributes/properties/published_at",
+                "type": "string",
+                "title": "The Published_at Schema",
+                "default": "",
+                "examples": [
+                  "2018-12-20T14:21:05.660Z"
+                ],
+                "pattern": "^(.*)$",
+                "format": null
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
