@@ -5,7 +5,7 @@ class NewsController < ApplicationController
 
   # GET /news
   def index
-    render json: NewsSerializer.new(@news).serialized_json
+    render json: NewsSerializer.new(@news, params: {current_user: current_user}).serialized_json
   end
 
   # GET /news/1

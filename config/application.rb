@@ -37,5 +37,6 @@ module Backend
     config.i18n.default_locale = :ru
     config.action_mailer.default_url_options = { host: 'crm.ihenek.ru' }
     config.filter_parameters += [:otp_attempt]
+    config.time_zone = 'Europe/Moscow'
   end
 end

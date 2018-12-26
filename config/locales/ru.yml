@@ -1,5 +1,5 @@
 ru:
-  active_record:
+  activerecord:
     models:
       tasks:
         one: Задача
@@ -11,7 +11,12 @@ ru:
         few: новости
         many: новостей
         other: новостей
-      attributes:
+    attributes:
+      tasks:
         color: Цвет
         title: Заголовок
         description: Описание
+      news:
+        title: Заголовок
+        description: Текст новости
+        published_at: Время публикации

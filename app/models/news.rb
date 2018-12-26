@@ -5,4 +5,6 @@ class News < ApplicationRecord
 
   validates :title, :description, :user, presence: true
   validates :slug, uniqueness: true
+
+  default_scope {order(id: :desc)}
 end
