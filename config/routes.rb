@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :clients
   resources :news
   devise_for :users,
              controllers: { sessions: 'sessions' },

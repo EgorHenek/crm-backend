@@ -44,7 +44,7 @@ RSpec.describe 'Tasks', type: :request do
     end
 
     it 'Ошибка доступа' do
-      post tasks_path, headers: auth_headers(@user), params: { task: attributes_for(:task), performer: @performer.id }
+      post tasks_path, params: { task: attributes_for(:task), performer: @performer.id }
       expect(response).to have_http_status(:forbidden)
     end
   end

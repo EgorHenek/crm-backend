@@ -4,7 +4,7 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     second_name { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
-    password { Faker::Internet.password(8, 128) }
+    password { Faker::Internet.password(8, 127) }
 
     transient do
       role { 'helper' }
