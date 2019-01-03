@@ -5,7 +5,8 @@ class CreateClients < ActiveRecord::Migration[5.2]
       t.string :address
       t.string :email, unique: true
       t.string :phone, unique: true
-      t.boolean :promotion
+      t.boolean :promotion, default: true
+      t.boolean :first_contact, default: false
 
       t.timestamps
     end

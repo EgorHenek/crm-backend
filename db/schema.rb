@@ -42,7 +42,8 @@ ActiveRecord::Schema.define(version: 2019_01_03_073933) do
     t.string "address"
     t.string "email"
     t.string "phone"
-    t.boolean "promotion"
+    t.boolean "promotion", default: true
+    t.boolean "first_contact", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

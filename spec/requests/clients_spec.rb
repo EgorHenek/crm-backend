@@ -56,6 +56,12 @@ RSpec.describe 'Clients', type: :request do
     end
 
     describe 'Валидация' do
+      it 'Только email' do
+        post clients_path, headers: auth_headers(@manager), params: attributes_for(:client, phone: '')
+        expect(response).to have_http_status(201)
+        expect(response).to match_json_schema('clients/id')
+      end
+
       it 'Уже существующий email' do
         post clients_path, params: { name: @clients.first.name, emails: @clients.first.email }
         expect(response).to have_http_status(:unprocessable_entity)

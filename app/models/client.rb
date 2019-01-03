@@ -10,7 +10,7 @@ class Client < ApplicationRecord
 
 
   def phone_or_email_presence
-    errors.add(:email, 'Телефон или email обязательны для заполнения') unless phone.present? && email.present?
+    errors.add(:email, 'Телефон или email обязательны для заполнения') if phone.blank? && email.blank?
   end
 
   before_validation do

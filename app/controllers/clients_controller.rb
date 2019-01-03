@@ -20,7 +20,7 @@ class ClientsController < ApplicationController
     if @client.save
       render json: ClientSerializer.new(@client).serialized_json, status: :created, location: @client
     else
-      render json: @client.errors, status: :unprocessable_entity
+      render json: @client.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class ClientsController < ApplicationController
     if @client.update(client_params)
       render json: ClientSerializer.new(@client).serialized_json
     else
-      render json: @client.errors, status: :unprocessable_entity
+      render json: @client.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -42,6 +42,6 @@ class ClientsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def client_params
-    params.permit(:name, :address, :email, :phone, :promotion)
+    params.permit(:name, :address, :email, :phone, :promotion, :first_contact)
   end
 end
