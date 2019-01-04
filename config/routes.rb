@@ -11,13 +11,6 @@ Rails.application.routes.draw do
     post 'auth/totp', to: 'totp#create'
     post 'auth/send_code', to: 'totp#send_code'
     delete 'auth/totp', to: 'totp#delete'
-    resource :registration,
-             only: [:create, :update],
-             path: 'auth',
-             path_names: { new: 'sign_up' },
-             controller: 'devise/registrations',
-             as: :user_registration,
-             defaults: { format: :json }
   end
   resources :tasks do
     member do

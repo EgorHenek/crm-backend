@@ -18,6 +18,7 @@ class ClientsController < ApplicationController
     @client = Client.new(client_params)
 
     if @client.save
+      ClientMailer.with(client: @client).welcome_email.deliver_later if @client.email.present?
       render json: ClientSerializer.new(@client).serialized_json, status: :created, location: @client
     else
       render json: @client.errors.full_messages, status: :unprocessable_entity
