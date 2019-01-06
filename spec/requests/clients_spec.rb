@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Clients', type: :request do
   before(:all) do
-    @user = create(:user)
+    @user = create(:user, role: 'master')
     @manager = create(:user, role: 'manager')
     @clients = create_list(:client, 7)
     @advertising = create(:user, role: 'advertising')

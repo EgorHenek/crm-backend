@@ -2,7 +2,6 @@
 
 class User < ApplicationRecord
   rolify
-  after_create :assign_default_role
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
@@ -17,9 +16,5 @@ class User < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name} #{second_name}"
-  end
-
-  def assign_default_role
-    self.add_role(:client) if self.roles.blank?
   end
 end

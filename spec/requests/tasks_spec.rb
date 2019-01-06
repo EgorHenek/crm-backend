@@ -90,10 +90,6 @@ RSpec.describe 'Tasks', type: :request do
         post subcontactors_task_path(@task), headers: auth_headers(@performer), params: { subcontactor: @subcontactor.id }
         expect(response).to have_http_status(:forbidden)
       end
-      it 'Ошибка добавления пользователя не имеющего прав' do
-        post subcontactors_task_path(@task), headers: auth_headers(@creator), params: { subcontactor: @user.id }
-        expect(response).not_to have_http_status(:ok)
-      end
     end
 
     describe 'DELETE /tasks/:id/subcontactors' do
