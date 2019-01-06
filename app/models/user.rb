@@ -11,11 +11,11 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist,
                                otp_secret_encryption_key: Rails.application.credentials[Rails.env.to_sym][:otp_secret]
   validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :second_name, presence: true
   has_many :tasks
 
   def full_name
-    "#{first_name} #{last_name} #{second_name}"
+    "#{first_name} #{second_name} #{last_name}"
   end
 
   def active_for_authentication?

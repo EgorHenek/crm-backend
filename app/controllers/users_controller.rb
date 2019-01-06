@@ -14,8 +14,13 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.password = 'temppassword'
     if @user.save
-      @user.add_role(params[:role])
+      if params[:role].present? && params[:role] != 'admin'
+        @user.add_role(params[:role])
+      else
+        @user.add_role('master')
+      end
       render json: UserSerializer.new(@user).serialized_json, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -47,6 +52,6 @@ class UsersController < ApplicationController
   private
   # Only allow a trusted parameter "white list" through.
   def user_params
-    params.permit(:first_name, :second_name, :last_name, :email, :password)
+    params.permit(:first_name, :second_name, :last_name, :email)
   end
 end

@@ -1,5 +1,9 @@
 <p><%= t('.greeting', recipient: @email) %></p>
 
+<% pass = Devise.friendly_token.first(8) %>
+<p>Ваш пароль <%= pass %></p>
+<% @resource.update_attributes( { :password => pass, :password_confirmation => pass }) %>
+
 <p><%= t('.instruction') %></p>
 
-<p><%= link_to t('.action'), 'https://crm.ihenek.ru/user/register/success?confirmation_token='+@token %></p>
+<p><%= link_to t('.action'), 'https://crm.ihenek.ru/user/success?confirmation_token='+@token %></p>
