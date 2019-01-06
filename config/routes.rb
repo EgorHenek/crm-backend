@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :clients
   resources :news
+  resources :users
   devise_for :users,
              controllers: { sessions: 'sessions' },
              defaults: { format: :json },

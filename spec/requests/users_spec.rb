@@ -6,7 +6,9 @@ RSpec.describe 'Users', type: :request do
   before(:all) do
     @user = create(:user)
     @user_otp_auth = create(:user, :otp_auth)
+    @admin = create(:user, role: :admin)
     @user_with_otp_code = create(:user, :with_otp_code)
+    @blocked_user = create(:user, blocked: true)
   end
 
   describe 'Авторизация' do
@@ -15,6 +17,10 @@ RSpec.describe 'Users', type: :request do
         post user_session_path, params: { user: { email: @user.email, password: @user.password } }
         expect(response).to have_http_status(:ok)
         expect(response).to match_json_schema('users/sign_in/ok')
+      end
+      it 'return forbidden' do
+        post user_session_path, params: { user: { email: @blocked_user.email, password: @blocked_user.password } }
+        expect(response).to have_http_status(:unauthorized)
       end
       describe '2-х факторная авторизация' do
         it 'return 200' do
@@ -100,6 +106,114 @@ RSpec.describe 'Users', type: :request do
       it 'Ошибка для отключённой авторизации по коду' do
         post auth_send_code_path, params: { email: @user.email }
         expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  describe 'Управление пользователями' do
+    describe 'GET /users' do
+      it 'return 200' do
+        get users_path, headers: auth_headers(@admin)
+        expect(response).to have_http_status(200)
+        expect(response).to match_json_schema('users/list')
+      end
+
+      describe 'Ошибка доступа' do
+        it 'без авторизации' do
+          get users_path
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'без прав' do
+          get users_path, headers: auth_headers(@user)
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+
+    describe 'GET /users/:id' do
+      it 'return 200' do
+        get user_path(@admin), headers: auth_headers(@admin)
+        expect(response).to have_http_status(200)
+        expect(response).to match_json_schema('users/id')
+      end
+
+      describe 'Ошибка доступа' do
+        it 'без авторизации' do
+          get user_path(@admin)
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'без прав' do
+          get user_path(@admin), headers: auth_headers(@user)
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+
+    describe 'DELETE /users/:id' do
+      it 'return 200' do
+        delete user_path(@user), headers: auth_headers(@admin)
+        expect(response).to have_http_status(:no_content)
+      end
+
+      describe 'Ошибка доступа' do
+        it 'без авторизации' do
+          delete user_path(@admin)
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'без прав' do
+          delete user_path(@admin), headers: auth_headers(@user)
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      describe 'Логические ошибки' do
+        it 'попытка блокировки админа' do
+          delete user_path(@admin), headers: auth_headers(@admin)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+
+    describe 'POST /users' do
+      it 'return 200' do
+        post users_path, headers: auth_headers(@admin), params: attributes_for(:user)
+        expect(response).to have_http_status(201)
+        expect(response).to match_json_schema('users/id')
+      end
+
+      describe 'Ошибка доступа' do
+        it 'Без авторизации' do
+          post users_path, params: attributes_for(:user)
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'Без прав' do
+          post users_path, params: attributes_for(:user), headers: auth_headers(@user)
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+
+    describe 'PUT /users/:id' do
+      it 'return 200' do
+        put user_path(@user), headers: auth_headers(@admin), params: { first_name: 'Новое имя' }
+        expect(response).to have_http_status(200)
+        expect(response).to match_json_schema('users/id')
+      end
+
+      describe 'Ошибка доступа' do
+        it 'Без авторизации' do
+          put user_path(@user), params: { first_name: 'Новое имя' }
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'Без прав' do
+          put user_path(@user), headers: auth_headers(@user), params: { first_name: 'Новое имя' }
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
   end
