@@ -11,6 +11,5 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.datetime :notify
       t.timestamps
     end
-    add_belongs_to :task_histories, :task, index: true, foreign_key: true
   end
 end
