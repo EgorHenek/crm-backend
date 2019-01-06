@@ -2,7 +2,7 @@
 lock "~> 3.11.0"
 
 set :application, "api_uraltrade"
-set :repo_url, "https://github.com/EgorHenek/crm-backend"
+set :repo_url, "git@github.com:EgorHenek/crm-backend.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
