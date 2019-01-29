@@ -1,0 +1,86 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "$id": "#/properties/data",
+      "type": "object",
+      "title": "The Data Schema",
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#/properties/data/properties/id",
+          "type": "string",
+          "title": "The Id Schema",
+          "default": "",
+          "examples": [
+            "1"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "type": {
+          "$id": "#/properties/data/properties/type",
+          "type": "string",
+          "title": "The Type Schema",
+          "default": "",
+          "examples": [
+            "promote"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "attributes": {
+          "$id": "#/properties/data/properties/attributes",
+          "type": "object",
+          "title": "The Attributes Schema",
+          "required": [
+            "title",
+            "text",
+            "created_at"
+          ],
+          "properties": {
+            "title": {
+              "$id": "#/properties/data/properties/attributes/properties/title",
+              "type": "string",
+              "title": "The Title Schema",
+              "default": "",
+              "examples": [
+                "Sooty"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "text": {
+              "$id": "#/properties/data/properties/attributes/properties/text",
+              "type": "string",
+              "title": "The Text Schema",
+              "default": "",
+              "examples": [
+                "You know, this is great guys. Drinking and eating garbage. I'm glad we all took a mental health day."
+              ],
+              "pattern": "^(.*)$"
+            },
+            "created_at": {
+              "$id": "#/properties/data/properties/attributes/properties/created_at",
+              "type": "string",
+              "title": "The Created_at Schema",
+              "default": "",
+              "examples": [
+                "2019-01-29T10:33:02.946+03:00"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

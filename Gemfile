@@ -43,6 +43,9 @@ gem 'paranoia', '~> 2.3'
 gem 'redcarpet'
 gem 'sanitize'
 
+gem 'sidekiq'
+gem 'sidekiq-status'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

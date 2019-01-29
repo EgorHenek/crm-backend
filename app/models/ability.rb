@@ -17,6 +17,7 @@ class Ability
 
       can :manage, Client if user.has_role? :manager
       can :manage, News if user.has_role? :advertising
+      can :manage, Promote if user.has_any_role? :advertising, :manager
     else
       can :read, News, ['published_at < ?', Time.now] do |news|
         news.published_at && news.published_at < Time.now

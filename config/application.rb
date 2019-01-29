@@ -38,5 +38,6 @@ module Backend
     config.action_mailer.default_url_options = { host: 'ural.henek.ru' }
     config.filter_parameters += [:otp_attempt]
     config.time_zone = 'Europe/Moscow'
+    config.active_job.queue_adapter = :sidekiq
   end
 end
