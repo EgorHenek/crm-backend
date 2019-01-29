@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  require 'sidekiq/web'
-  require 'sidekiq-status/web'
-
-  mount Sidekiq::Web => '/sidekiq'
+  # require 'sidekiq/web'
+  # require 'sidekiq-status/web'
+  #
+  # mount Sidekiq::Web => '/sidekiq'
   resources :promotes, except: :edit do
     post 'start'
   end
